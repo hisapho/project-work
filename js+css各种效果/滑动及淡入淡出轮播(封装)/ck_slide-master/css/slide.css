@@ -1,0 +1,83 @@
+
+.slide ul {
+    margin:0;
+    padding:0;
+    list-style-type:none;
+}
+/*以上可以省略*/
+.slide {
+    overflow:hidden;
+    position:relative;
+}
+.slide ul.slide-wrapper {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+}
+.slide ul.slide-wrapper li {
+    position:absolute;
+}
+.slide .ck-ctrl {
+    
+}
+.slide .prev,
+.slide .next {
+    position:absolute;
+    z-index:2;
+    top:50%;
+    margin-top:-35px;/*margin-top加上top确保按钮垂直居中*/
+    width:35px;
+    height:70px;
+    opacity:.15;
+    background:red;
+    border-radius:3px;
+    text-indent:-9999px;
+    background-repeat:no-repeat;
+    transition:opacity .2s linear 0s;
+}
+.slide .prev {
+    left:5px;
+    background:url(../images/arrow-left.png) #000 no-repeat center center;
+}
+.slide .next {
+    right:5px;
+    background:url(../images/arrow-right.png) #000 no-repeat center center;
+}
+.slidebox {
+    left:50%;
+    z-index:30;
+    position:absolute;
+    bottom:12px;
+}
+.slidebox ul {
+    height:20px;
+    padding:0 4px;
+    background:rgba(0,0,0,0.5);
+    border-radius:8px;
+}
+.slidebox ul li {
+    float:left;
+    height:12px;
+    margin:4px 4px;
+}
+.slidebox ul li em {
+    width:12px;
+    height:12px;
+    cursor:pointer;
+    background:#fff;
+    border-radius:100%;
+    text-indent:-9999px;
+    display:block;
+}
+.slidebox ul li.current em {
+    background:#FE6500;
+}
+.slidebox ul li em:hover {
+    background:#FE6500;
+}
+.slidebox .dot-wrap {
+    
+}
+.slidebox .slideWrap{
+}

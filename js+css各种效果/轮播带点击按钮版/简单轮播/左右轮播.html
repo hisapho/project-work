@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .out{
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+        }
+        .inner{
+            width: 9900px;
+            height: 300px;
+            font-size: 0;
+        }
+        img{margin-left: 0;
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="out">
+    <div class="inner">
+        <img src="./img/lunbo1.jpg" alt=""/>
+        <img src="./img/lunbo0.jpg" alt=""/>
+        <img src="./img/lunbo2.jpg" alt=""/>
+    </div>
+</div>
+<input type="button" value="上一张" onclick="previmg()" />
+<input type="button" value="下一张" onclick="nextimg()"/>
+</body>
+</html>
+<script src="jquery-1.11.3.min.js"></script>
+<script>
+    ///正常轮播fun
+    function normal(){
+        $("img").eq(0).animate({"margin-left":-300},500,function(){
+            $("img").first().insertAfter($("img").last()).css("margin-left","")
+        })
+    }
+    ///反向运动
+    function unnormal(){
+        $("img").last().css("margin-left",-300).insertBefore($("img").first()).animate({"margin-left":0},500,function(){
+
+        })
+    }
+    ///下一张fun
+    function nextimg(){
+        clearInterval(running);
+        $("img").stop(false,true);
+        normal();
+        running=setInterval(normal,2000)
+    }
+    ///上一张
+    function previmg(){
+        clearInterval(running);
+        $("img").stop(false,true);
+        unnormal();
+        running=setInterval(normal,2000)
+    }
+    var running=setInterval(normal,2000)
+
+</script>

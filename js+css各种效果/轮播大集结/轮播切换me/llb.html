@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .banner{
+            position: relative;
+            overflow: hidden;
+            width:960px;
+            height:450px;
+            margin:0 auto;
+        }
+        .first{
+            position: absolute;
+            left:0px;
+            top:0;
+        }
+        .prev{
+            position: absolute;
+            width:60px;
+            height:90px;
+            left:0;
+            top:180px;
+            background: url("./images/ad_ctr.png");
+        }
+        .next{
+            position: absolute;
+            width:60px;
+            height:90px;
+            left:900px;
+            top:180px;
+            background: url("./images/ad_ctr.png") 0 -90px;
+        }
+    </style>
+    <script src="jquery-1.11.3.min.js">
+
+    </script>
+</head>
+<body>
+<div class="banner">
+    <img class="first" src="./images/ad_home.jpg"/>
+    <div class="prev"></div>
+    <div class="next"></div>
+</div>
+<script>
+    var imgArr = ["./images/ad_home.jpg","./images/ad_yuetu.jpg","./images/ad_nba.jpg","./images/ad_stock.jpg"];
+    var index = 0;
+    $(".next").click(function(){
+        index++;
+        $(".first").fadeOut(100,function(){
+            $(".first").attr("src", imgArr[index]);
+            $(this).fadeIn(1000);
+        });
+
+    });
+</script>
+</body>
+</html>

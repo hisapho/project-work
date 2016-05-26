@@ -1,0 +1,122 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <title>一款带动画效果的经典二级导航菜单Jquery特效</title>
+    <meta name="author" content="Jquery" charset="UTF-8"/>
+    <meta name="keywords" content="Jquery,Jquery资源,前端设计,div+css" />
+    <style>
+        html, body, ul, li, h1, h2, h3, h4, h5, h6, fieldset, legend {padding:0; margin:0;}
+        body {font:12px/normal Verdana, Arial, Helvetica, sans-serif;}
+        ul,li {list-style-type:none; text-transform:capitalize;}
+        .clear{clear:both;height:0;font-size: 1px;line-height: 0px;}
+        /*menu*/
+        #nav {
+            margin:0 auto 60px;
+            width:1080px;
+            display:block;
+        }
+        .mainlevel {
+            background:#ffe60c;
+            float:left;
+            border-right:1px solid #fff;
+            width:140px;
+        }
+        .mainlevel a {
+            color:#000;
+            text-decoration:none;
+            line-height:32px;
+            display:block;
+            padding:0 20px;
+            width:100px;
+            font-weight:bold;
+        }
+        .mainlevel a:hover {
+            color:#fff;
+            text-decoration:none;
+            background:#062723 0 0;
+            font-weight:bold;
+        }
+        .mainlevel ul {
+            display:none;
+            position:absolute;
+        }
+        .mainlevel li {
+            border-top:1px solid #fff;
+            background:#ffe60c;
+            width:140px;
+            font-weight:bold;
+        }
+    </style>
+    <script type="text/javascript" src="http://jt.875.cn/js/jquery.js"></script>
+    <!--<script type="text/javascript" src="./js/jquery-1.11.3.min.js"></script>-->
+    <script type="text/javascript" >
+        $(function(){
+            $('li.mainlevel').hover(function(){
+                $(this).find('ul').slideDown(500);//鼠标滑过找到当前的UL，向下滑出显示子菜单
+            },function(){
+                $(this).find('ul').stop(true,false).slideUp("fast");
+            });
+        });
+    </script>
+</head>
+<body>
+<ul id="nav">
+    <li class="mainlevel">
+        <a href="http://www.875.cn/" target="_blank">Jquery插件</a>
+        <ul >
+            <li><a href="http://www.875.cn/" target="_blank">JavaScript</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">jQuery</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideUp</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideDown</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">up and down</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">animate</a></li>
+        </ul>
+    </li>
+    <li class="mainlevel">
+        <a href="http://www.875.cn/" target="_blank">Jquery资源</a>
+        <ul>
+            <li><a href="http://www.875.cn/" target="_blank">JavaScript</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">jQuery</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideUp</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideDown</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">up and down</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">animate</a></li>
+        </ul>
+    </li>
+    <li class="mainlevel">
+        <a href="http://www.875.cn/" target="_blank">Jquery特效</a>
+        <ul id="sub_03">
+            <li><a href="http://www.875.cn/" target="_blank">JavaScript</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">jQuery</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideUp</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideDown</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">up and down</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">animate</a></li>
+        </ul>
+    </li>
+    <li class="mainlevel" >
+        <a href="http://www.875.cn/" target="_blank">Jquery学堂</a>
+        <ul >
+            <li><a href="http://www.875.cn/" target="_blank">JavaScript</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">jQuery</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideUp</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">slideDown</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">up and down</a></li>
+            <li><a href="http://www.875.cn/" target="_blank">animate</a></li>
+        </ul>
+    </li>
+    <li class="mainlevel" >
+        <a href="http://www.875.cn/" target="_blank">分享快乐</a>
+        <ul >
+            <li><a href="http://www.nifengla.com/" target="_blank">JavaScript</a></li>
+            <li><a href="http://www.nifengla.com/" target="_blank">jQuery</a></li>
+            <li><a href="http://www.nifengla.com/" target="_blank">slideUp</a></li>
+            <li><a href="http://www.nifengla.com/" target="_blank">slideDown</a></li>
+            <li><a href="http://www.nifengla.com/" target="_blank">up and down</a></li>
+            <li><a href="http://www.nifengla.com/" target="_blank">animate</a></li>
+        </ul>
+    </li>
+    <!--<div class="clear"></div>-->
+</ul>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html{
+            font-size: 62.5%;
+        }
+        body{
+            margin:0;
+            padding:0;
+        }
+        dl{
+            margin:0;
+            padding:0;
+        }
+        .catalog-btn{
+            width: 6rem;
+            height: 6rem;
+            line-height: 6rem;
+            text-align: center;
+            background: rgba(69,157,245,.9);
+            color: #fff;
+            position: fixed;
+            z-index: 999;
+        }
+        .catalog-btn.off{
+            right:65%;
+            top:50%;
+            transition: right 1s;
+        }
+        .catalog-btn.on{
+            right: 2%;
+            bottom: 4rem;
+        }
+        .catalog{
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 65%;
+            height: 100%;
+            background: #00ac61;
+            z-index: 1002;
+        }
+        .catalog.hide {
+            right: -65%;
+            transition: right 1s;
+        }
+        .catalog.show {
+            right: 0;
+            transition: right 1s;
+        }
+        .catalog .catalog-title {
+            height: 4rem;
+            color: #fff;
+            font-size: 2rem;
+            line-height: 2rem;
+            background: #459df5;
+            padding-left: 16px;
+            font-weight: 700;
+        }
+        .content{
+            width:90%;
+            /*height:250rem;*/
+            margin:0 auto 0;
+            background: #f2e7cf;
+        }
+        .go-top {
+            display: none;
+            width: 6rem;
+            height: 6rem;
+            line-height: 6rem;
+            overflow: hidden;
+            background: #ccc;
+            position: fixed;
+            right: 2%;
+            bottom: 10rem;
+            text-align: center;
+        }
+        .go-top a{
+            color:#fff;
+            text-decoration: none;
+        }
+        .mask{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1001;
+            height: 100%;
+            background: #000;
+            opacity: .7;
+            display: none;
+        }
+        .catalog-tip{
+            opacity: 0;
+            position: fixed;
+            top: 50%;
+            left: 17.5%;
+            margin-top: -33.5px;
+            margin-left: -30px;
+            z-index: 1002;
+            color: #fff;
+            font-size: 1.5rem;
+            -webkit-transition: opacity .6s ease-in;
+            transition: opacity .6s ease-in;
+        }
+        .catalog-tip.show {
+            opacity: 1;
+            -webkit-transition: opacity .6s ease-in;
+            transition: opacity .6s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="go-top" ><a href="">回到顶部</a></div>
+    <div class="catalog-btn on">按钮</div>
+    <dl class="catalog hide">
+        <dt class="catalog-title">一级导航标题</dt>
+        <dd class="catalog-content" id="catalog">
+            <ul class="catalog-list">
+                <li class="catalog-item" ><a href="">1</a></li>
+                <li class="catalog-item" ><a href="">2</a></li>
+                <li class="catalog-item" ><a href="">3</a></li>
+                <li class="catalog-item" ><a href="">4</a></li>
+            </ul>
+        </dd>
+    </dl>
+    <div class="mask">
+        <div class="catalog-tip">
+            <p>关闭目录</p>
+        </div>
+    </div>
+
+    <div class="content">
+        内容内容内容内容内容内容内容内容
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+    <script src="jquery-1.11.3.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //点击菜单按钮展开二级菜单
+            var catalogEle = $(".catalog");
+            $(".catalog-btn").click(function(){
+                    $(".mask").show();
+                    $(".catalog-tip").addClass("show");
+                    catalogEle.removeClass("hide");
+                    catalogEle.addClass("show");
+            });
+            $(".mask").click(function(){
+                $(this).removeClass("show");
+                $(".mask").hide();
+                catalogEle.removeClass("show");
+                catalogEle.addClass("hide");
+            });
+
+            //回到顶部按钮显示隐藏
+            $(window).scroll(function(){
+                if ($(window).scrollTop()>window.screen.availHeight-200){
+                   $(".go-top").fadeIn(500);
+                }else {
+                   $(".go-top").fadeOut(500);
+                }
+            });
+            //点击回到顶部按钮,滚动条回到顶部
+            $(".go-top").click(function(){
+               $('body,html').animate({scrollTop:0},800);
+               return false;
+            });
+        })
+    </script>
+</body>
+</html>

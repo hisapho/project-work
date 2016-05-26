@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <style>
+        .banner_wrap{
+            position: relative;
+            width:1000px;
+            height:400px;
+            margin:0 auto 0;
+        }
+        .banner{
+            position:absolute;
+            left:0;
+            top:0;
+            width:1000px;
+        }
+        .banner li img{
+            display: block;
+            position: absolute;
+            left:0;
+            top:0;
+            width:1000px;
+            height:400px;
+        }
+        .banner_btn{
+            position: absolute;
+            left:40%;
+            bottom: 0;
+            width:150px;
+            height:35px;
+        }
+        .banner_btn span{
+            cursor: pointer;
+            width:15px;
+            height:15px;
+            display: block;
+            float:left;
+            margin-right: 20px;
+            background:#fff ;
+        }
+        .banner_btn .btn_selected{
+            background: deepskyblue;
+        }
+        .banner p{
+            width:100px;
+            height:35px;
+            margin:0 auto;
+        }
+        .left_arrow {
+            width:60px;
+            height:90px;
+            cursor: pointer;
+            background:#000 url(./images/ad_ctr.png) no-repeat 5px -180px;
+            filter:alpha(opacity:50);opacity:0.5;
+            position: absolute;
+            left:0;
+            top:155px;
+            display:none;
+        }
+        .left_arrow_hover {
+            background:#000 url(./images/ad_ctr.png) no-repeat 3px top;
+        }
+        .right_arrow {
+            width:60px;
+            height:90px;
+            cursor: pointer;
+            background:#000 url(./images/ad_ctr.png) no-repeat -5px bottom;
+            filter:alpha(opacity:50);opacity:0.5;
+            position: absolute;
+            right:0;
+            top:155px;
+            display:none;
+        }
+        .right_arrow_hover {
+            background:#000 url(./images/ad_ctr.png) no-repeat -3px -90px;
+        }
+    </style>
+</head>
+<body>
+<div class="banner_wrap">
+    <div class="banner">
+        <ul>
+            <li><a href="" class="photo"><img src="./images/ad_yuetu.jpg"/></a></li>
+            <li><a href="" class="photo"><img src="images/ad_nba.jpg" /></a></li>
+            <li><a href="" class="photo"><img src="images/ad_stock.jpg" /></a></li>
+            <li><a href="" class="photo"><img src="images/ad_auto.jpg" /></a></li>
+        </ul>
+    </div>
+    <p class="left_arrow"></p>
+    <p class="right_arrow"></p>
+    <div class="banner_btn">
+        <p>
+            <span class="btn_selected"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </p>
+    </div>
+</div>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script>
+    $(function(){
+        var num = $(".banner_btn span").length;
+        var curIndex = 0;
+        var timer = null;
+        $(".banner ul li:gt(0)").hide();
+        $(".banner_btn span").click(function(){
+            var indexBtn = $(".banner_btn span").index(this);
+            $(this).addClass("btn_selected").siblings("span").removeClass("btn_selected");
+            $(".banner ul li").eq(indexBtn).fadeIn('slow').siblings("li").fadeOut('slow');
+            curIndex = indexBtn;
+        });
+        //显示隐藏左右按钮
+        $(".banner_wrap").hover(function(){
+            clearInterval(timer);
+            $(".left_arrow").show();
+            $(".right_arrow").show();
+        },
+        function(){
+            bannerMove();
+            $(".left_arrow").hide();
+            $(".right_arrow").hide();
+        });
+        //左右按钮hover样式变更
+        $(".left_arrow").hover(function(){
+            $(this).addClass("left_arrow_hover");
+        },function(){
+            $(this).removeClass("left_arrow_hover");
+        });
+        $(".right_arrow").hover(function(){
+            $(this).addClass("right_arrow_hover");
+        },function(){
+            $(this).removeClass("right_arrow_hover");
+        });
+        //左按钮点击
+        $(".left_arrow").click(function(){
+            if(curIndex == 0){
+                curIndex = num ;
+            }
+            $(".banner li").eq(curIndex - 1).fadeIn('slow').siblings('li').fadeOut('slow');
+            $(".banner_btn span").eq(curIndex - 1).addClass('btn_selected').siblings('span').removeClass('btn_selected');
+            curIndex --;
+
+        });
+        //右按钮点击
+        $(".right_arrow").click(function(){
+            bannerFade();
+        });
+
+        //自动播放
+        bannerMove();
+        function bannerMove(){
+            timer = setInterval(function(){
+                bannerFade();
+            },2000);
+        }
+
+        function bannerFade(){
+            if(curIndex == num -1){
+                curIndex = -1;
+            }
+            $(".banner li").eq(curIndex + 1).fadeIn('slow').siblings('li').fadeOut('slow');
+            $(".banner_btn span").eq(curIndex + 1).addClass('btn_selected').siblings('span').removeClass('btn_selected');
+            curIndex ++;
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侧边导航栏滚动效果</title>
+    <style>
+        ul{
+            margin:0;
+            padding:0;
+            list-style: none;
+        }
+        #menu{
+            position: fixed;
+            top:100px;
+            left:50%;
+            margin-left: 400px;
+        }
+        /*直接给li里面的a设置样式即可*/
+        #menu ul li a{
+            display: block;
+            color:#fff;
+            width:80px;
+            height:50px;
+            margin: 5px 0;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 50px;/*垂直居中*/
+            text-align: center;/*水平居中*/
+            text-decoration: none;
+            background: #00a0e9;
+        }
+        #menu ul li a:hover,
+        #menu ul li a.current{
+            background: mediumvioletred;
+        }
+
+        #content{
+            width:800px;
+            margin:0 auto 0;
+        }
+        #content h1{
+            color:#333;
+        }
+        .item{
+            padding: 20px;
+            border-top: 2px solid red;
+            overflow: hidden;
+        }
+        .item h2{
+            color:#00afce;
+        }
+        .item ul li{
+            float:left;
+        }
+        .item ul li a{
+            display: block;
+            margin: 10px;
+        }
+        .item ul li a img{
+            height:200px;
+        }
+    </style>
+</head>
+<body>
+<!--侧边固定导航栏-->
+    <div id="menu">
+        <ul>
+            <li><a href="#item1" class="current">1F 男装</a></li>
+            <li><a href="#item2">2F 女装</a></li>
+            <li><a href="#item3">3F 美妆</a></li>
+            <li><a href="#item4">4F 衣服</a></li>
+            <li><a href="#item5">5F 饰品</a></li>
+        </ul>
+    </div>
+<!--内容-->
+    <div id="content">
+        <h1>轻松购购物</h1>
+        <div id="item1" class="item">
+            <h2>1F 男装</h2>
+            <ul>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./3.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./4.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+            </ul>
+        </div>
+        <div id="item2" class="item">
+            <h2>2F 女装</h2>
+            <ul>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./3.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./4.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+            </ul>
+        </div>
+        <div id="item3" class="item">
+            <h2>3F 美妆</h2>
+            <ul>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./3.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./4.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+            </ul>
+        </div>
+        <div id="item4" class="item">
+            <h2>4F 衣服</h2>
+            <ul>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./3.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./4.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+            </ul>
+        </div>
+        <div id="item5" class="item">
+            <h2>5F 饰品</h2>
+            <ul>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./3.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./4.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./1.jpeg" alt=""></a></li>
+                <li><a href=""><img src="./2.jpeg" alt=""></a></li>
+            </ul>
+        </div>
+    </div>
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        //html5中锚点指向id,不再是name
+        $(document).ready(function(){
+            //滚动条监听事件
+            $(window).scroll(function(){
+                var top = $(document).scrollTop();
+                var menu = $("#menu");
+                var items = $("#content").find(".item");
+                var currentId = "";
+                items.each(function(){
+                    var m = $(this);
+                    var itemTop = m.offset().top;
+                    if(top>itemTop-100){
+                        currentId = "#" + m.attr("id");
+                    }else{
+                        return false;
+                    }
+                });
+                //给相应的a设置current样式,取消其他链接的current
+                var currentLink = menu.find(".current");
+                if(currentId && currentLink.attr("href")!= currentId){
+                    currentLink.removeClass("current");
+                    menu.find("[href=" + currentId + "]").addClass("current");
+                }
+                //console.log(top);
+            })
+        })
+    </script>
+</body>
+</html>

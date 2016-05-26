@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .out{
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+        }
+        .inner{
+            width: 9999px;
+            height: 300px;
+            font-size: 0;
+        }
+        img{margin-left: 0;
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+<div class="out">
+    <div class="inner">
+        <img src="./img/lunbo1.jpg" alt=""/>
+        <img src="./img/lunbo0.jpg" alt=""/>
+        <img src="./img/lunbo2.jpg" alt=""/>
+        <img src="./img/t012b110e26317b735e.jpg" alt=""/>
+        <img src="./img/t01fb47fac77d3f72b3.jpg" alt=""/>
+    </div>
+</div>
+<input type="button" value="上一张" onclick="previmg()" />
+<span>
+<input type="button" value="1"/>
+<input type="button" value="2"/>
+<input type="button" value="3"/>
+<input type="button" value="4"/>
+<input type="button" value="5"/></span>
+<input type="button" value="下一张" onclick="nextimg()"/>
+</body>
+</html>
+<script src="jquery-1.11.3.min.js"></script>
+<script>
+    var imgnum=100;
+    $("span input").eq(0).css("color","red");
+
+    ///正常轮播fun
+    function normal(){
+        imgnum++;
+        $("img").eq(0).animate({"margin-left":-300},500,function(){
+            $("span input").css("color","").eq(imgnum%5).css("color","red");
+            $("img").first().insertAfter($("img").last()).css("margin-left","")
+        })
+    }
+    function fastnormal(speed){
+        imgnum++;
+        $("img").eq(0).animate({"margin-left":-300},speed,function(){
+            $("span input").css("color","").eq(imgnum%5).css("color","red");
+
+            $("img").first().insertAfter($("img").last()).css("margin-left","");
+            nownum = imgnum%5+1;
+            console.log(clicknum);
+            console.log(nownum);
+            if(clicknum==nownum){
+                return
+            }
+            fastnormal()
+        })
+    }
+    ///反向运动
+    function unnormal(){
+        imgnum--;
+        $("img").last().css("margin-left",-300).insertBefore($("img").first()).animate({"margin-left":0},500,function(){
+            $("span input").css("color","").eq(imgnum%5).css("color","red");
+
+        })
+    }
+    function fastunnormal(speed){
+        imgnum--;
+        $("img").last().css("margin-left",-300).insertBefore($("img").first()).animate({"margin-left":0},speed,function(){
+            $("span input").css("color","").eq(imgnum%5).css("color","red");
+
+            nownum = imgnum%5+1;
+            console.log(clicknum)
+            console.log(nownum);
+            if(clicknum==nownum){
+                return
+            }
+            fastunnormal(speed)
+        });
+
+    }
+    ///下一张fun
+    function nextimg(){
+        clearInterval(running);
+        $("img").stop(false,true);
+        normal();
+        running=setInterval(normal,3000)
+    }
+    ///上一张
+    function previmg(){
+        clearInterval(running);
+        $("img").stop(false,true);
+        unnormal();
+        running=setInterval(normal,3000)
+    }
+    /////指定图片按钮
+        var clicknum;
+        var nownum;
+    $("span input").click(function(){
+        clearInterval(running);
+        $("img").stop(false,true);
+         clicknum= parseInt($(this).val());
+         nownum = imgnum%5+1;
+        if(clicknum>nownum){
+                fastnormal(200 / (clicknum - nownum))
+        }else if(nownum>clicknum){
+
+                fastunnormal(200 / (nownum - clicknum))
+
+        }
+        running=setInterval(normal,3000)
+    });
+    var running=setInterval(normal,3000)
+
+
+</script>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{
+            width: 250px;
+            height: 250px;
+            overflow: hidden;
+        }
+        p {
+            height: 30px;
+            margin: 0;
+            padding: 5px;
+            line-height: 30px;
+        }
+        .color_1{
+            background-color: #ffff00;
+        }
+        .color_2{
+            background-color: #068bca;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>发发哈哈哦噶公安公安管卡1</p>
+    <p>发发哈哈哦噶公安公安管卡2</p>
+    <p>发发哈哈哦噶公安公安管卡3</p>
+    <p>发发哈哈哦噶公安公安管卡4</p>
+    <p>发发哈哈哦噶公安公安管卡5</p>
+    <p>发发哈哈哦噶公安公安管卡6</p>
+    <p>发发哈哈哦噶公安公安管卡7</p>
+    <p>发发哈哈哦噶公安公安管卡8</p>
+    <p>发发哈哈哦噶公安公安管卡9</p>
+    <p>发发哈哈哦噶公安公安管卡10</p>
+    <p>发发哈哈哦噶公安公安管卡11</p>
+</div>
+</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+    $("p:nth-child(2n-1)").addClass("color_1");
+
+    $("p:nth-child(2n)").addClass("color_2");
+    function running(){
+        $("p").first().animate({
+            "margin-top":-40
+        },1000,"linear",function(){
+            //first() 将匹配元素集合缩减为集合中的第一个元素。hasClass() 方法检查被选元素是否包含指定的 class。返回true/false
+            $("p").first().removeClass().addClass($("p").last().hasClass("color_1")?"color_2":"color_1").css("margin-top","").insertAfter($("p").last());
+            running();
+        })
+    }
+    running();
+</script>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-Type" content="text/html;charset=utf-8"/>
+    <meta name="keywords" content="mslider">
+    <meta name="description" content="mslider test">
+    <title>mslider test</title>
+    <style>
+        body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+        body{font:12px,"Arial Narrow",HELVETICA;background:#fff;}
+        a{text-decoration:none}
+        a:hover{color:#cd0200;text-decoration:underline}
+        em{font-style:normal}
+        li{list-style:none}
+        img{border:0;vertical-align:middle}
+        table{border-collapse:collapse;border-spacing:0}
+        p{word-wrap:break-word}
+
+        .show_box {width:20%;height:auto;margin:0 auto;}
+        .show_win {width:100%;height:auto;}
+        .show_win img {width:100%;}
+        .show_spec {height:50px;border:1px solid #aaa;}
+        .show_spec .control_left {float:left;line-height:50px;}
+        .show_spec .control_right {float:left;line-height:50px;}
+        .show_list {float:left;width:200px;margin:0 auto;height:50px;overflow:hidden;position:relative;}
+        .show_list .list_h {width:999px;overflow:hidden;position:relative;}
+        .show_list li {float:left;display:inline;}
+        .show_list li img {width:50px;height:50px;}
+    </style>
+</head>
+<body>
+<div class="show_box">
+    <div class="show_win">
+        <!--<img class="test" src="./img01.jpg">-->
+    </div>
+    <div class="show_spec">
+        <div class="control_left"><img src="./carousel-left.png"></div>
+        <div class="show_list">
+            <ul class="list_h">
+                <li><img src="./1.jpg"></li>
+                <li><img src="./2.jpg"></li>
+                <li><img src="./3.jpg"></li>
+                <li><img src="./4.jpg"></li>
+                <li><img src="./1.jpg"></li>
+                <li><img src="./2.jpg"></li>
+                <li><img src="./3.jpg"></li>
+                <li><img src="./4.jpg"></li>
+            </ul>
+        </div>
+        <div class="control_right"><img src="./carousel-right.png"></div>
+    </div>
+</div>
+</body>
+<script src="./jquery-1.11.3.min.js" type="text/javascript"></script>
+<script  type="text/javascript">
+    jQuery(function($){
+        var moveList = $('.list_h');
+        var unit = $('.list_h').find('li');
+        var unitImg = unit.find('img');
+        var unitWidth = unit.outerWidth();
+        var unitLength = unit.length;
+        var moveNum = 0;
+        var marqueeWidth;
+        var showNum = 4; /* 窗口显示个数 */
+
+        /* 控制部分 */
+        $('.control_left').click(function(){
+            if ( moveNum > 0 ){
+                moveNum--;
+                marqueeWidth = moveNum * unitWidth;
+                scroll();
+            }
+        });
+
+        $('.control_right').click(function(){
+            if ( moveNum < (unitLength - showNum)){
+                moveNum++;
+                marqueeWidth = moveNum * unitWidth;
+                scroll();
+            }
+        });
+
+        /* 动作部分 */
+        var scroll = function(){
+            moveList.animate({left:-marqueeWidth},200,'swing');
+        }
+
+
+        var showImg = $('.show_win').find('img');
+
+        unit.mouseover(function(){
+            var choiceSrc = $(this).find('img').attr('src');
+            showImg.attr('src',choiceSrc);
+        });
+
+    });
+</script>
+</html>

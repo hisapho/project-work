@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS判断是什么设备是什么浏览器</title>
+    <meta charset="utf-8">
+    <meta name="apple-touch-fullscreen" content="YES" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+</head>
+<body>
+<div id="browser"></div>
+<script type="text/javascript">
+    var os = function() {
+        var ua = navigator.userAgent,
+            isQB = /(?:MQQBrowser|QQ)/.test(ua),
+            isWindowsPhone = /(?:Windows Phone)/.test(ua),
+            isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
+            isAndroid = /(?:Android)/.test(ua),
+            isFireFox = /(?:Firefox)/.test(ua),
+            isChrome = /(?:Chrome|CriOS)/.test(ua),
+            isIpad = /(?:iPad|PlayBook)/.test(ua),
+            isTablet = /(?:iPad|PlayBook)/.test(ua)||(isFireFox && /(?:Tablet)/.test(ua)),
+            isSafari = /(?:Safari)/.test(ua),
+            isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+            isOpen= /(?:Opera Mini)/.test(ua),isUC = /(?:UCWEB|UCBrowser)/.test(ua),
+            isPc = !isPhone && !isAndroid && !isSymbian;
+        return {
+            isQB: isQB,
+            isTablet: isTablet,
+            isPhone: isPhone,
+            isAndroid : isAndroid,
+            isPc : isPc,
+            isOpen : isOpen,
+            isUC: isUC,
+            isIpad : isIpad
+        };
+    }();
+    var html=[];
+    html[html.length]='是QQ浏览器:'+os.isQB+"<br/>";
+    html[html.length]='是Tablet:'+os.isTablet+"<br/>";
+    html[html.length]='是Phone:'+os.isPhone+"<br/>";
+    html[html.length]='是Android:'+os.isAndroid+"<br/>";
+    html[html.length]='是电脑:'+os.isPc+"<br/>";
+    html[html.length]='是Opera浏览器:'+os.isOpen+"<br/>";
+    html[html.length]='是UC浏览器:'+os.isUC+"<br/>";
+    html[html.length]='是Ipad:'+os.isIpad+"<br/>";
+    document.getElementById("browser").innerHTML=html.join("");
+</script>
+</body>
+</html>

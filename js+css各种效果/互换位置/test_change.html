@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>互换位置(服务中心备用)</title>
+    <style>
+        .service{
+            padding-top: 30px;
+            height:860px;
+            background: #e8f0f8;
+        }
+        .service-logo{
+            width:112px;
+            height:114px;
+            margin:0 auto 0;
+        }
+        .service h1{
+            text-align: center;
+            font-size: 48px;
+            font-weight: 100;
+        }
+        .service-list{
+            overflow: hidden;
+            width:670px;
+            margin:30px auto 0;
+        }
+        .service li{
+            float:left;
+            margin-right: 20px;
+            width:200px;
+            height:60px;
+            text-align: center;
+            line-height: 60px;
+            border-radius: 5px;
+            background: #c9cdd0;
+        }
+        .service-list a{
+            font-size: 30px;
+        }
+        .service-list li:hover{
+            background: #b02127;
+        }
+        .service-list li:hover a{
+            color:#fff;
+            font-weight: 100;
+        }
+        /*js互换位置*/
+        .bannerWrap{
+            position: relative;
+            z-index: 1;
+            height:450px;
+            border:1px solid red;
+            /*background: url("../images/center-shadow.png") repeat-x;*/
+        }
+        .banner{
+            padding: 0;
+            list-style: none;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            width:1000px;
+            height:450px;
+            border:1px solid red;
+        }
+        .service .banner li{
+            background: transparent;
+        }
+        #left{
+            position: absolute;
+            z-index: 2;
+            left:0;
+            top:40px;
+        }
+        #center{
+            position: absolute;
+            z-index: 5;
+            left:250px;
+            top:40px;
+        }
+        #right{
+            position: absolute;
+            z-index: 2;
+            left:555px;
+            top:40px;
+        }
+        .banner a{
+            display:block;
+            overflow: hidden;
+            width:400px;
+            height:400px;
+            background: #c9cdd0;
+            border-radius: 50%;
+            /*box-shadow: 3px 3px 1px  red;*/
+        }
+        .banner a img{
+            border:0;
+            width:400px;
+            height:400px;
+        }
+    </style>
+</head>
+<body>
+<div class="service">
+    <a name="service"></a>
+    <div class="service-logo"></div>
+    <h1>服务中心</h1>
+    <ul class="service-list">
+        <li><a href="#">案例体验</a></li>
+        <li><a href="#">典型客户</a></li>
+        <li><a href="#">服务网点</a></li>
+    </ul>
+
+    <div class="bannerWrap">
+        <ul class="banner">
+            <li id="left"><a href="javascript:void(0);" class=""><img src="./images/slide-1.jpg" alt="image1"></a></li>
+            <li id="center"><a href="javascript:void(0);" class="" ><img src="./images/slide-2.jpg" alt="image1"></a></li>
+            <li id="right"><a href="javascript:void(0);" class="" ><img src="./images/slide-3.jpg" alt="image1"></a></li>
+        </ul>
+    </div>
+
+</div>
+<script src="./jquery-1.11.3.min.js"></script>
+<script>
+    $(function(){
+        var iconObjArray = [ $("#left"), $("#center"), $("#right") ];
+        var move_right_function = function(){
+            console.log("left");
+            var left = iconObjArray[0];
+            var center = iconObjArray[1];
+            var right = iconObjArray[2];
+
+            left.animate({"z-index":5},100);
+            left.animate({left:"250px"},1000);
+            center.animate({"z-index":2},100);
+            center.animate({left:"555px"},1000);
+            right.animate({"z-index":1},100);
+            right.animate({left:"0px"},1000);
+
+            iconObjArray = [ right, left, center];
+            resetButtonEvent();
+        };
+
+        //初始化左中右三个图片的点击事件
+        function resetButtonEvent(){
+            iconObjArray[0].off("click");
+            iconObjArray[1].off("click");
+            iconObjArray[2].off("click");
+            iconObjArray[0].click(move_right_function);
+            iconObjArray[2].click(move_left_function);
+//            clearInterval(timer);
+        }
+
+        //页面加载完就自动移动
+        var timer = window.setInterval(function(){
+            move_left_function();
+        },3000);
+
+        var move_left_function = function(){
+            console.log("right");
+            var left = iconObjArray[0];
+            var center = iconObjArray[1];
+            var right = iconObjArray[2];
+
+            right.animate({"z-index":5},100);
+            right.animate({left:"250px"},1000);
+            center.animate({"z-index":2},100);
+            center.animate({left:"0px"},1000);
+            left.animate({"z-index":1},100);
+            left.animate({left:"555px"},1000);
+
+            iconObjArray = [center,right,left];
+            resetButtonEvent();
+        };
+//        resetButtonEvent();
+    })
+
+</script>
+</body>
+</html>

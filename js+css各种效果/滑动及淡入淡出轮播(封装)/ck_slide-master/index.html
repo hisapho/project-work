@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="css/slide.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/slide.js"></script>
+    <style>
+        .slide {
+            /*width:700px;*/
+            width:1000px;
+            height:400px;
+        }
+        .slide ul.slide-wrapper {
+            height:400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <ul class="slide-wrapper">
+            <li>
+                <a href="http://createthink.net"><img src="images/1.jpg" alt="" style="width:1000px;"></a>
+            </li>
+            <li style="display:none">
+                <a href="http://www.oschina.net"><img src="images/2.jpg" alt="" style="width:1000px;"></a>
+            </li>
+            <li style="display:none">
+                <a href="javascript:;"><img src="images/3.jpg" alt="" style="width:1000px;"></a>
+            </li>
+            <li style="display:none">
+                <a href="javascript:;"><img src="images/4.jpg" alt="" style="width:1000px;"></a>
+            </li>
+            <li style="display:none">
+                <a href="javascript:;"><img src="images/5.jpg" alt="" style="width:1000px;"></a>
+            </li>
+        </ul>
+        <a href="javascript:;" class="ctrl-slide prev">上一张</a>
+        <a href="javascript:;" class="ctrl-slide next">下一张</a>
+        <div class="slidebox">
+            <div class="slideWrap">
+                <ul class="dot-wrap">
+                    <li class="current"><em>1</em></li>
+                    <li><em>2</em></li>
+                    <li><em>3</em></li>
+                    <li><em>4</em></li>
+                    <li><em>5</em></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('.slide').ckSlide({
+//            淡入淡出
+            autoPlay:true
+//            滑动
+//            dir:"x"
+        });
+    </script>
+</body>
+</html>

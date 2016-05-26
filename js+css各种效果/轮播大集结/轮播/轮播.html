@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            cursor: pointer;
+            margin-top: 40px;
+            height: 454px;
+        }
+        .inner {
+            margin: auto;
+            width: 960px;
+            height: 454px;
+            position: relative;
+        }
+        #back {
+            position: absolute;
+            width: 40px;
+            height: 105px;
+            left: 0;
+            top: 160px;
+        }
+        #forward {
+            position: absolute;
+            width: 40px;
+            height: 105px;
+            right: 0;
+            top: 160px;
+        }
+        .point-index {
+            position: absolute;
+            left: 340px;
+            top: 420px;
+        }
+        .point-index>li {
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            text-align: center;
+            margin: 3px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="inner">
+            <img class="main-img" src="ad_home.jpg" />
+            <a href="javascript: void(0)"><img id="back" src="back.png"></a>
+            <a href="javascript: void(0)"><img id="forward" src="forwar.png"></a>
+            <ul class="point-index"></ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    //元素对象定义
+    var containerEle = document.getElementsByClassName("container")[0];
+    var innerEle = document.getElementsByClassName("inner")[0];
+    var mainImgEle = document.getElementsByClassName("main-img")[0];
+    var backEle = document.getElementById("back");
+    var forwardEle = document.getElementById("forward");
+    var pointIndexEle = document.getElementsByClassName("point-index")[0];
+    var imgsArr = ["ad_home.jpg", "ad_nba.jpg", "ad_stock.jpg", "ad_yuetu.jpg"];
+    var count = 1;
+
+    //定义方法
+    function initPointIndexEle() {
+        //创建园点
+        for (var i = 0; i < imgsArr.length; i++) {
+            pointIndexEle.innerHTML += "<li>" + (i + 1) + "</li>";
+        }
+        //鼠标移动到圆换图片
+        for (var j = 0; j < imgsArr.length; j++) {
+            var liEle = pointIndexEle.childNodes[j];
+            liEle.onmouseover = function() {
+                this.style.backgroundColor = "red";
+                count = parseInt(this.innerHTML) - 1;
+                mainImgEle.setAttribute("src", imgsArr[count]);
+            };
+            liEle.onmouseout = function() {
+                this.style.backgroundColor = "black";
+            }
+        }
+        //动态居中
+        var len = pointIndexEle.childNodes.length;
+        var ulWidth = undefined;
+        var mainImgWidth = undefined;
+        for (var k = 0; k < len; k++) {
+            if (pointIndexEle.childNodes[k].currentStyle) {
+                ulWidth = pointIndexEle.childNodes[k].currentStyle.width;
+            } else if (document.defaultView) {
+                ulWidth = document.defaultView.getComputedStyle(pointIndexEle.childNodes[k], null).width;
+            }
+        }
+        if (mainImgEle.currentStyle) {
+            mainImgWidth = document.getElementsByClassName("inner")[0].currentStyle.width;
+        } else if (document.defaultView) {
+            mainImgWidth = document.defaultView.getComputedStyle(document.getElementsByClassName("inner")[0], null).width;
+        }
+        pointIndexEle.style.left = (parseInt(mainImgWidth) - (parseInt(ulWidth) * len) - (3 * 2 * len)) / 2 + "px";
+    }
+    function autoMove() {
+        if (count === 3) count = 0;
+        mainImgEle.setAttribute("src", imgsArr[count++]);
+    }
+
+    //调用
+    initPointIndexEle();
+    var timer = setInterval("autoMove()", 1500);
+
+    //绑定时间
+    innerEle.onmouseover = function() {
+        clearInterval(timer);
+    };
+    innerEle.onmouseout = function() {
+        timer = setInterval("autoMove()", 1500);
+    };
+    forwardEle.onclick = function() {
+        if (count === 2) count = -1;
+        mainImgEle.setAttribute("src", imgsArr[++count]);
+    };
+    backEle.onclick = function() {
+        if (count === 0) count = 3;
+        mainImgEle.setAttribute("src", imgsArr[--count]);
+    }
+</script>
+</html>

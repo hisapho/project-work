@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播切换</title>
+    <style>
+        .wrap{
+            position: relative;
+            width:960px;
+            height:450px;
+            margin:50px auto 0;
+        }
+        .banner{
+            position: relative;
+            overflow: hidden;
+            width:960px;
+            height:450px;
+        }
+       .first{
+           position: absolute;
+           left:-960px;
+           top:0;
+       }
+       .middle{
+           position: absolute;
+           left:0;
+           top:0;
+       }
+       .last{
+           position: absolute;
+           left:960px;
+           top:0;
+       }
+        .prev{
+            position: absolute;
+            width:60px;
+            height:90px;
+            left:0;
+            top:180px;
+            background: url("./images/ad_ctr.png");
+        }
+        .next{
+            position: absolute;
+            width:60px;
+            height:90px;
+            left:900px;
+            top:180px;
+            background: url("./images/ad_ctr.png") 0 -90px;
+        }
+    </style>
+    <script src="jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <div class="banner">
+        <img class="first" src="./images/ad_home.jpg"/>
+        <img class="middle" src="./images/ad_yuetu.jpg"/>
+        <img class="last" src="./images/ad_nba.jpg"/>
+        <div class="prev "></div>
+        <div class="next"></div>
+    </div>
+</div>
+<script>
+    var imgArr = ["./images/ad_home.jpg","./images/ad_yuetu.jpg","./images/ad_nba.jpg","./images/ad_stock.jpg"];
+    var index = 2;
+    function slideNext(obj) {
+        if (parseInt(obj.css("left")) == -960) {
+            obj.animate({"left": "960px"},0, function () {
+                index++;
+                if (index >= imgArr.length) {
+                    index = 0;
+                }
+                obj.fadeIn(1000,function(){
+                    obj.attr("src", imgArr[index]);
+                })
+            });
+        }else{
+            obj.animate({
+                "left": parseInt(obj.css("left"))-960+"px"
+            }, 1000);
+        }
+    }
+    function slidePrev(obj){
+        if(parseInt(obj.css("left"))== 960){
+            obj.animate({"left": "-960px"},0, function () {
+                index++;
+                if (index >= imgArr.length ) {
+                    index = 0;
+                }
+                obj.attr("src", imgArr[index]);
+
+            });
+        }else{
+            obj.animate({
+                "left": parseInt(obj.css("left"))+960+"px"
+            }, 1000);
+        }
+    }
+    $(".next").click(function(){
+        slideNext($(".first"));
+        slideNext($(".middle"));
+        slideNext($(".last"));
+    });
+    $(".prev").click(function(){
+        slidePrev($(".first"));
+        slidePrev($(".middle"));
+        slidePrev($(".last"));
+    });
+</script>
+</body>
+</html>

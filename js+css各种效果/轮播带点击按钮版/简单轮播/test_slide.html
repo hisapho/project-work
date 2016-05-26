@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .list_wrap{
+            position:relative;
+            width:800px;
+            height:250px;
+            border:1px solid red;
+            margin:0 auto;
+            overflow: hidden;
+        }
+        .list{
+            display: table;
+            width:800px;
+            height:250px;
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        .list li{
+
+            white-space:nowrap;
+            list-style: none;
+            display:table-cell;
+            *float:left;
+            *display:inline-block;
+            width:240px;
+            height:240px;
+            padding-right:20px;
+        }
+    </style>
+</head>
+<body>
+<div class="list_wrap">
+    <ul class="list" style="left:0px;top:0px;">
+        <li>1<img src="./img/lunbo0.jpg"/></li>
+        <li>2<img src="./img/lunbo1.jpg"/></li>
+        <li>3<img src="./img/lunbo2.jpg"/></li>
+        <li>4<img src="./img/lunbo0.jpg"/></li>
+        <li>5<img src="./img/lunbo1.jpg"/></li>
+        <li>6<img src="./img/lunbo2.jpg"/></li>
+        <li>7<img src="./img/lunbo0.jpg"/></li>
+        <li>8<img src="./img/lunbo1.jpg"/></li>
+        <li>9<img src="./img/lunbo2.jpg"/></li>
+    </ul>
+</div>
+<script src="jquery-1.11.3.min.js"></script>
+<script>
+//    function normal(){
+//        $("img").eq(0).animate({"margin-left":-300},500,function(){
+//            $("img").first().insertAfter($("img").last()).css("margin-left","")
+//        })
+//    }
+$(function(){
+    setInterval(slide,1000);
+    var num = 1;
+    function slide(){
+        $(".list").animate({"left":-790*num},500,function(){
+            num++;
+            if($(".list").css("left")=="-2370px"){
+                $(".list").animate({"left":0},10);
+                num = 1;
+            }
+        })
+    }
+})
+
+
+</script>
+</body>
+</html>
