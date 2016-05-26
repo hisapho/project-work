@@ -1,0 +1,176 @@
+1.ie下背景图片铺满全屏解决方法:
+
+问题:设置background:cover,chrome,ff,ie9+正常,ie9兼容模式(推测是ie7)及ie8两边有留白
+解决:放弃在body上设置背景图片,在html上加一个div专门放背景图片
+<div id="div1"><img src="./images/content_bg.png" /></div>
+css:
+div#div1{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    z-index:-1;
+}
+div#div1 > img {
+    height:100%;
+    width:100%;
+    border:0;
+}
+
+2.导航二级菜单的显示隐藏问题
+
+--现象:鼠标hover,二级菜单显示,鼠标移出一级菜单,二级菜单就消失,但是我们需要鼠标hover二级菜单上时二级菜单不消失.
+--原因:二级菜单对象不是一级菜单的子元素,是独立于一级菜单的,这样鼠标hover一级菜单,移出后二级菜单就消失无法点击.
+--解决方法:1.将一级,二级菜单元素用span包裹,在span上添加事件
+            2.在二级菜单对象上再添加了一个事件,显示自身.
+--总结:解决问题最关键的是用e.target来跟踪鼠标的即时位置
+
+$(function(){
+    //二级菜单显示
+    var objShowMenu = null;
+    $(".second_menu ul").hide();
+    $(".left_menu li").not(':first').each(function(){
+        $(this).hover(function(){
+            $(".second_menu").show();
+            $(".second_menu").css("background","#f9fafc");
+            $(".second_menu ul").css("display","none");
+            var index = $( ".left_menu li" ).index($(this)[0]);
+            $(".second_menu ul").eq(index-1).show();
+            objShowMenu = $(".second_menu ul").eq(index-1);
+            console.log("in of left_menu li");
+        }, function(e){
+            //$(".second_menu ul").hide();
+            $(".second_menu").css("display","none");
+
+        });
+    });
+    $(".second_menu").hover(function(){
+        $(".second_menu").css("display","block");
+        objShowMenu.show();
+    },function(){
+        //$(".second_menu ul").hide();
+        $(this).hide();
+    })
+});
+$(document).mouseover(function(e){
+    console.log("mouse over at :");
+    console.log(e.target);});
+
+3.让div,li等元素超出部分文字用省略号…显示。
+
+display:block;
+white-space:nowrap; 
+overflow:hidden; 
+text-overflow:ellipsis;
+鼠标hover显示全部,可以用overflow:visible,也可以在元素标签上(一般是a标签)加上title属性
+
+4.ie下绝对定位z-index失效bug;
+
+在制作左侧菜单hover显示隐藏时,因为菜单是放在banner上方,banner以及菜单都用到了绝对定位,因为我设置了菜单优先级高于banner,但是菜单在ie下竟然未显示被banner遮挡,好像z-index并没有效果,经网上查询,发现好像ie中子元素的优先级要取决于其父元素的优先级,我把父元素的z-index设置高,果真有效.
+但是使用绝对定位完全脱离了文档流,后面的元素会飞上去,所以绝对定位慎用.
+
+5.制作小箭头的方法
+
+<li class="arrow">◇</li>
+.arrow{
+    overflow: hidden;
+    width:6px;/*尺寸这些可以微调*/
+    height:26px;
+    /*border:1px solid red;*/
+    font-size: 22px;
+    text-align: center;
+    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation:2);/*兼容ie*/
+    transform: rotate(180deg);
+}
+ie旋转滤镜Matrix
+语法:filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=i)
+其中i取0，1，2，3，分别代表旋转90度、180度、270度、360度。
+45度这些要用到滤镜matrix
+            filter:progid:DXImageTransform.Microsoft.Matrix(M11=0.707,M12=m12,M21=m21,M22=m22,sizingMethod="auto expand");
+
+
+6.把ul,li列表去掉,换成div包裹a标签,另在a后面加一个span,可以解决a标签内文字超出容器宽度自动换行的问题
+
+7.一些动态加载的数据,像以li的a展示的,要考虑到宽度问题
+宽度固定,内容超出不换行,显示为省略号
+为a加上css
+.topic a{
+    display: inline-block;
+    width:160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+8.轮播问题解决,fadeOut(0),$(".banner_ul li:gt(0)").hide(),换成hide(),原因:jquery低版本不支持fadeOut(0),可以换成hide(),我用的是jquery.1.11.3.min.js;
+
+9.html5 placeholder的字体颜色设置
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
+color: #666; 
+} 
+input:-moz-placeholder, textarea:-moz-placeholder { 
+color: #666; 
+} 
+input::-moz-placeholder, textarea::-moz-placeholder { 
+color: #666; 
+} 
+input:-ms-input-placeholder, textarea:-ms-input-placeholder { 
+color: #666; 
+} 
+
+10.css3设置背景颜色渐变
+
+- webkit浏览器: background:-webkit-gradient(linear, 0 100%, 100% 100%, from(#1cc3f7), to(#55dbf4));从左向右横向渐变
+- mozilla浏览器
+background:-moz-linear-gradient( left, red,blue);
+如果为top,是竖向渐变
+-ie浏览器:(不需要写background)
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=red,endColorstr=blue,gradientType=1);
+ 0 代表竖向渐变        1  代表横向渐变  
+ 
+11.##命令行基本操作##
+
+1.返回根目录 cd \
+2.返回上一级 cd..
+3.进入下一层 cd目录名
+4.改变当前驱动器目录,进入d盘,d:
+5.如果当前目录是C:\Documents and Settings 要切换到 d:\soft 在命令行输入cd d:\soft回车后再输入d: 
+
+12.ul的li浮动每行2个显示,里面有高度不一的图片,li会出现换行即一排只能显示1个的情况,
+
+原因:li的float导致,给li设置display:inline;或者display:inline-block;给img设置vertical-align:top
+
+13.价格上的删除线
+
+text-decoration:line-through;
+
+14.段落排版
+
+--缩进
+p{text-indent:2em;}
+--中文字间距
+p{letter-spacing:50px;}
+--单词间距
+p{word-spacing:50px;}
+
+
+##css规范##
+
+15.css命名class一般以连字符-
+16.不要把css样式用作js的钩子,可以写一个js专用的class,以js为前缀
+17.避免过分修饰选择器,将影响性能
+18.所有组件都不要声明宽度，而由其亲元素或格栅系统来决定。
+
+坚决不要声明高度。高度应当仅仅用于尺寸已经固定的东西，例如图片和 CSS Sprite。在 p，ul，div 等元素上不应当声明高度。如果需要的话可以写 line-height，这个更加灵活。
+19.css简写应当谨慎使用
+
+
+20.grunt安装步骤
+
+- 1.全局安装grunt-cli:npm install grunt-cli -g
+- 2.进入项目根目录后安装本地grunt:npm install grunt --save-dev
+- 3.在项目根目录下运行grunt命令,可以运行grunt -v查看版本
+问题:安装之后运行grunt后提示:"grunt' 不是内部或外部命令，也不是可运行的程序"
+原因:没有全局安装,直接本地安装;设置环境变量也没用,如果正确安装,设置全局变量可以不用一定在项目根目录下运行

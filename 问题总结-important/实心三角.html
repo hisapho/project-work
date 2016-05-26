@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css3利用矩形制作三角箭头</title>
+    <style>
+        .arrow{
+            width: 10px;
+            height: 10px;
+            margin-bottom: 50px;
+            overflow:hidden;
+            zoom: 1;
+            position: absolute;
+            left:50px;
+            top:50px;
+            border:1px solid red;
+            background: red;
+            /*border-right: 1px solid #AAA;*/
+            /*border-bottom: 1px solid #AAA;*/
+            transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            /*background-color: #FFF;*/
+            filter:progid:DXImageTransform.Microsoft.Matrix(M11=0.707,M12=-0.707,M21=0.707,M22=-0.707,sizingMethod="auto expand");
+        }
+        /*ie的话可以用滤镜实现,但是0,90,180,270,360这几个对应的值是0,1,2,3,filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=i),
+        像45度这种需要使用矩阵滤镜,麻烦些*/
+        .arrow_not_border {
+            position: relative;
+            left:50px;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            zoom: 1;
+            border: 8px solid transparent;
+            border-top-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!--有边框的箭头ie有问题-->
+    <div class="arrow"></div>
+    <!--无边框的箭头,三角形-->
+    <div class="arrow_not_border"></div>
+</body>
+</html>

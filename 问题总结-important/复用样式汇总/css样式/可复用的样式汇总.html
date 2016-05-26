@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>可复用的样式汇总</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="../jquery-1.11.3.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+
+<!--模拟select下拉列表1-->
+    <div class="search_bg">
+        <div class="search_wrap">
+            <div class="select">
+                <ul>
+                    <li id="check">
+                        <a href="#" class="total">全部</a>
+                        <div class="triangle"></div>
+                    </li>
+                    <li>
+                        <ul class="select_list">
+                            <li><a href="#">全部</a></li>
+                            <li><a href="#">经部</a></li>
+                            <li><a href="#">史部</a></li>
+                            <li><a href="#">子部</a></li>
+                            <li><a href="#">集部</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <input type="text" class="search_box"/>
+            <input type="button" value="搜索" class="search_btn"/>
+            <input type="button" value="高级检索" class="advanced_search_btn"/>
+        </div>
+    </div>
+<!--模拟select下拉列表2-->
+    <div class="link-box">
+        <div class="cur-link">更多链接</div>
+        <ul class="link-list">
+            <li><a href="javascript:void(0)">更多链接1</a></li>
+            <li><a href="javascript:void(0)">更多链接2</a></li>
+            <li><a href="javascript:void(0)">更多链接3</a></li>
+        </ul>
+        <span class="arrow-btn"></span>
+    </div>
+<!--搜索框-->
+    <div class="search-wrap">
+        <div class="search-box radius">
+            <input type="text" class="search" placeholder="请输入关键字...">
+            <a href="#" class="search-btn"><img src="./search-icon.png"></a>
+        </div>
+    </div>
+<!--列表样式1-->
+    <div class="water-item ">
+        <h1 class="item-title">
+            <span>亲水嬉水</span>
+            <a href="#" class="more">MORE+</a>
+        </h1>
+        <ul class="item-list">
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+            <li><a href="">天然水体与水化学</a><span>2016-03-22</span></li>
+        </ul>
+    </div>
+<!--列表样式2-->
+    <div class="hot-resource  radius gradient">
+        <h1 class="item-title"><span>热门资源</span><a href="" class="more">MORE+</a></h1>
+        <ul class="hot-list">
+            <li><input type="button" value="1" class="top-three radius"/><a href="" title="创新以流域机构为核心的水治理体制">创新以流域机构为核心的水治理体制创新以流域机构为核心的水治理体制</a></li>
+            <li><input type="button" value="2" class="top-three radius"/><a href="" title="脑内水转运的研究进展">脑内水转运的研究进展</a></li>
+            <li><input type="button" value="3" class="top-three radius"/><a href="">水环境与农业水资源利用</a></li>
+            <li><input type="button" value="4" class="radius"><a href="">松辽流域水资源投入产出分析</a></li>
+            <li><input type="button" value="5" class="radius"><a href="">基于“易”理论的水资源循环经济管理研究</a></li>
+            <li><input type="button" value="6" class="radius"><a href="">基于“易”理论的水资源循环经济管理研究</a></li>
+            <li><input type="button" value="7" class="radius"><a href="">基于“易”理论的水资源循环经济管理研究</a></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .test{
+            margin:900px auto 500px;
+            width:800px;
+            height:600px;
+            position: relative;
+            background-color: #00ac61;
+        }
+        .target{
+            position: absolute;
+            left:200px;
+            width:400px;
+            height:300px;
+            opacity: 0;
+            background-color: palevioletred;
+        }
+        .link-box{
+            top:50px;
+            position: relative;
+            margin-left: 14px;
+            width:365px;
+            height:37px;
+            border:1px solid #cccccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+        .cur-link{
+            float:left;
+            width:318px;
+            height:37px;
+            line-height: 37px;
+            color:#cccccc;
+            text-indent: 120px;
+        }
+        .link-list{
+            display: none;
+            position: absolute;
+            left:0;
+            top:37px;
+            width:317px;
+            border:1px solid #cccccc;
+            overflow: hidden;
+        }
+        .link-list li{
+            width:316px;
+            height:37px;
+            line-height: 37px;
+            text-indent: 120px;
+            background-color: #fff;
+        }
+        .link-list li a{
+            text-decoration: none;
+            color:#cccccc;
+        }
+        .arrow-btn{
+            cursor: pointer;
+            float:left;
+            display: block;
+            width:43px;
+            height:37px;
+            border-left:1px solid #cccccc;
+            background: url(./img/arrow-btn.png) no-repeat center center;
+        }
+
+    </style>
+    <script src="./js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+   <div class="link-box">
+       <div class="cur-link">更多链接</div>
+       <ul class="link-list">
+           <li><a href="javascript:void(0)">更多链接1</a></li>
+           <li><a href="javascript:void(0)">更多链接2</a></li>
+           <li><a href="javascript:void(0)">更多链接3</a></li>
+       </ul>
+       <span class="arrow-btn"></span>
+   </div>
+   <div class="test">
+       <div class="target">
+           test test test
+       </div>
+   </div>
+   <script>
+       $(function(){
+           var targetHeight = $(".test").offset().top;
+
+           $(window).scroll(function(){
+               var scrollTop = $(this).scrollTop();
+               if(scrollTop>targetHeight-200){
+                   $(".target").animate({left:'150px',opacity:1},500);
+               }
+           });
+
+           var listLength = $(".link-list li").length * 37;
+
+           $(".link-list").hide();
+           $(".arrow-btn").click(function(e){
+               $(".link-list").slideToggle(500);
+               $(document).one("click", function(){
+                   $(".link-list").hide();
+               });
+               e.stopPropagation();
+           });
+           $(".link-list li").click(function(e){
+               var curText = $(this).find('a').text();
+               $(".cur-link").html(curText);
+               $(".link-list").hide();
+               e.stopPropagation();
+           });
+       })
+   </script>
+</body>
+</html>

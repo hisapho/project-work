@@ -1,0 +1,250 @@
+1.button里面的letter-spacing中文字间距设置
+
+问题描述:设置之后现代浏览器无法使文字水平居中,会偏右,
+原因:最后一个字后面也有间距存在
+解决方式:用空格解决;或者用paddding-left:2px解决
+
+2.兼容ie6,7,8背景透明内容不透明解决方法:
+
+ 详见http://www.cnblogs.com/PeunZhang/p/4089894.html
+
+body{
+    padding: 50px;
+    background: url(img/bg.png) 0 0 repeat;
+}
+.demo{
+  padding: 25px;
+  background: #000000;
+  filter:Alpha(opacity=50);/* 只支持IE6、7、8、9 */
+  position:static; /* IE6、7、8只能设置position:static(默认属性) ，否则会导致子元素继承Alpha值 */
+  *zoom:1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+}
+.demo p{
+    color: #FFFFFF;
+    position: relative;/* 设置子元素为相对定位，可让子元素不继承Alpha值，保证字体颜色不透明 */
+}      
+
+</style>
+<div class="demo">
+    <p>背景透明，文字不透明</p>
+</div>
+
+ps:透明度设置:
+  IE：
+  filter:alpha(opacity=sqlN)
+  其中 sqlN的值域为[0, 100]
+
+  
+
+##背景透明但文字不透明的实现方法(兼容所有浏览器)
+
+实现透明的css方法通常有以下3种方式，以下是不透明度都为80%的写法
+
+1.css3的 opacity:x，x 的取值从 0 到 1，如opacity: 0.8
+   
+   设置opacity元素的所有后代元素会随着一起具有透明性，一般用于调整图片或者模块的整体不透明度
+
+
+2.css3的 rgba(red, green, blue, alpha)，alpha的取值从 0 到 1，如rgba(255,255,255,0.8)
+
+   设置颜色的不透明度，一般用于调整background-color、color、box-shadow等的不透明度。
+
+   在background-color中使用rgba，标准浏览器中，背景透明，文字不透明，
+   但是IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂rgba，解析后颜色为透明，其实应该是null
+
+
+
+3.IE专属滤镜 filter:Alpha(opacity=x)，x 的取值从 0 到 100，如filter:Alpha(opacity=80)
+
+   IE浏览器专属，问题多多
+
+   仅支持IE6、7、8、9，在IE10版本被废除
+
+   在IE6、7中，需要激活IE的haslayout属性(如：*zoom:1或者*overflow:hidden)，让它读懂filter:Alpha
+
+   在IE6、7、8中，设置了filter:Alpha的元素，父元素设置position:static(默认属性)，其子元素为相对定位，可让子元素不透明
+
+4.全兼容的方案
+
+  设置透明背景文字不透明，可采用的属性有rgba和IE的专属滤镜filter:Alpha，
+  针对IE6、7、8浏览器，我们可以采用fiter:Alpha，针对标准浏览器我们采用rgba，那么问题来了，IE9浏览器2个属性都支持，一起使用会重复降低不透明度...
+
+  让滤镜只支持IE6、7、8 的方法:@media \0screen\,screen\9 {...}
+
+  完整demo
+  <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>背景透明，文字不透明</title>
+<style>
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+  padding: 50px;
+  background: url(img/bg.png) 0 0 repeat;
+}
+
+.demo{
+  padding: 25px;
+  background-color: rgba(0,0,0,0.5);/* IE9、标准浏览器、IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂 */
+}
+.demo p{
+  color: #FFFFFF;
+}
+@media \0screen\,screen\9 {/* 只支持IE6、7、8 */
+  .demo{
+    background-color:#000000;
+    filter:Alpha(opacity=50);
+    position:static; /* IE6、7、8只能设置position:static(默认属性) ，否则会导致子元素继承Alpha值 */
+    *zoom:1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+  }
+  .demo p{
+    position: relative;/* 设置子元素为相对定位，可让子元素不继承Alpha值 */
+  }  
+}
+
+</style>
+</head>
+<body>    
+
+<div class="demo">
+    <p>背景透明，文字不透明</p>
+</div>
+
+</html>
+
+
+
+
+
+
+3.行间距设置
+
+用line-height :number/%;
+
+4.文字阴影css3
+
+text-shadow:h-shadow v-shadow blur color;  详见梦想天空
+
+6.ie8下margin-top失效
+
+ - 当该div上面的div是绝对定位或者浮动时,ie8下,设置该div的margin-top无效,
+解决方法:单独为ie8设置hack,float;或者如果上div是绝对定位的话,可以将其移到该div的下方.
+- 还有父元素未设置border,子元素 设置margin-top无效
+解决方法:为父元素设置overflow:hidden;为父元素设置border透明;改margin-top为padding-top
+
+7.不用js实现placeholder的类似功能
+
+<input type="text" value="请输入您的姓名" onfocus="javascript:if(this.value='请输入您的姓名'){this.value='';}" onblur="javascript:if(!this.value){this.value='请输入您的姓名';}" class="name" NO="0"/>
+
+8.文字竖排(类蒙古文)
+
+暂用li浮动,width为字体大小解决
+ie有writing-model:tb-rl属性,可以实现,其他浏览器暂未有(现在已经基本支持)
+现在浏览器已经基本支持writing-mode属性
+.verticle-mode {
+    writing-mode: tb-rl;
+    -webkit-writing-mode: vertical-rl;      
+    writing-mode: vertical-rl;
+}
+/* IE7比较弱，需要做点额外的动作 */
+.verticle-mode {
+    *width: 120px;
+}
+.verticle-mode h4,
+.verticle-mode p {
+    *display: inline;
+    *writing-mode: tb-rl;
+}
+.verticle-mode h4 {
+    *float:right;
+}
+<h4>咏柳</h4>
+<p>碧玉妆成一树高，<br>万条垂下绿丝绦。<br>不知细叶谁裁出，<br>二月春风似剪刀。</p>
+
+<div class="verticle-mode">
+    <h4>咏柳</h4>
+    <p>碧玉妆成一树高，<br>万条垂下绿丝绦。<br>不知细叶谁裁出，<br>二月春风似剪刀。</p>
+</div>
+详见http://www.zhangxinxu.com/wordpress/2016/04/css-writing-mode/
+
+9.输入框input输入文字竖排显示
+
+- ie浏览器的writing-model属性支持input框竖排效果的实现,其他浏览器暂未查到;
+-  <textarea cols="1" rows="10" ></textarea>可以实现,限定列和行,但是会出现滚动条.
+要设置textarea文本域的滚动条是否开启，使用style.overflow-x属性来控制。如：如果要隐藏该文本域的横向滚动条，在style属性中增加overflow-x属性控制，如下：
+<textarea id=txtComments style="overflow-x:hidden"></textarea>
+相应的，若要隐藏纵向滚动条：
+<textarea id=txtComments style="overflow-y:hidden"></textarea>
+如果使用代码控制的话，可能需要如下代码实现：
+document.all("txtComments").style.overflowX="hidden";
+overflow-x,overflow-y的可取值为：visible(默认取值),hidden,auto,scroll。
+
+10.特殊字体
+
+字体打包技术,后台处理
+
+11.option设置背景颜色
+
+在option标签里加入style="background-color:#000;";(css里设置没有效果)
+
+12.颜色渐变(多用于按钮背景)
+
+    background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#ece9da), to(#ecc08b));
+
+13.手机号码正则(较新)
+
+    /(^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$)|(^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$)/
+
+
+14.手机字体大小设置
+
+html里面设置fontsize 1rem=12px 
+不同分辨率对应不同的大小
+一般320对应12px,375对应14,414对应16px,在手机16px偏大
+html {font-size: 62.5%;/*10 ÷ 16 × 100% = 62.5%*/}
+body {font-size: 1.4rem;/*1.4 × 10px = 14px */}
+h1 { font-size: 2.4rem;/*2.4 × 10px = 24px*/}
+
+15.input的button按钮的文字不居中
+
+padding,line-height解决
+
+16.ie中父元素float:left;子元素float:right;父元素未设置宽高,float:left就会失效
+
+解决:父元素设置宽度
+
+17.冒泡,点击菜单显示,点击其他地方隐藏(事件流)
+
+//点击#a元素,菜单显示,然后在body上点击一次任何元素,隐藏菜单
+$("#a").on("click", function(e){
+    $("#menu").show();
+    $(document).one("click", function(){
+        $("#menu").hide();
+    });
+    e.stopPropagation();//(阻止捕获)
+});
+//点击菜单本身,阻止捕获
+$("#menu").on("click", function(e){
+    e.stopPropagation();
+});
+
+18.jquery 获取下拉列表的值
+
+获取select选中的option的值:$("#select").find("option:selected").val();
+详见博客http://blog.csdn.net/cui_angel/article/details/8000432
+
+19.超级简单的横向手风琴代码jquery
+
+链式操作的体现
+$(".num").click(function(){
+        $(this).css({"background-color":"#c20000"}).find("h1").css("color","#fff");
+        $(this).parent().siblings().find(".num").css({"background-color":"#e5e5e5"}).find("h1").css("color","#8a8a8a");
+        $(this).parent().siblings().find("div:last").css({width:0});
+        $(this).next().animate({width:"315px"},500);
+});
+

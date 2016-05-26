@@ -1,0 +1,252 @@
+1.滑动轮播
+
+html
+
+	<div class="teacher-item">
+        <div class="left-btn"></div>
+        <div class="right-btn"></div>
+        <div class="list-box">
+            <ul class="teacher-list">
+                <li>
+                    <div class="teacher-photo">
+                        <a href=""><img src="./images/teacher.png"/></a>
+                        <p class="teacher-name">李冉</p>
+                    </div>
+                    <p class="teacher-info">
+                        1他是一名70后，却全力投入90后研究。他说：“我是70后眼中的异类，90后心中...
+                    </p>
+                </li>
+               <li>...</li>
+            </ul>
+        </div>
+    </div>
+css
+
+.teacher-item{
+    position: relative;
+    width:1200px;
+    height:300px;
+}
+.left-btn{
+    position: absolute;
+    top: 30%;
+    left:0;
+    z-index: 5;
+    background: url(../images/arrow2.png) no-repeat left top;
+    width: 25px;
+    height: 40px;
+    cursor: pointer;
+}
+.right-btn{
+    position: absolute;
+    top: 30%;
+    right:0;
+    z-index: 5;
+    background: url(../images/arrow2.png) no-repeat left -90px;
+    width: 25px;
+    height: 40px;
+    cursor: pointer;
+}
+.list-box{
+    overflow: hidden;
+    position: relative;
+    top:20px;
+    width:1000px;
+    height:260px;
+    margin:0 auto 0;
+    /*border: 1px solid red;*/
+}
+.teacher-list{
+    position: absolute;
+    left:0;
+    height:260px;
+}
+.teacher-list li{
+    float:left;
+    width: 160px;
+    height: 260px;
+    margin: 0 20px;
+    font-size: 14px;
+}
+.teacher-photo{
+    position: relative;
+    height:160px;
+}
+.teacher-name{
+    position: absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    text-align: center;
+    font-size: 20px;
+    color:#fff;
+    background: rgba(0,0,0,0.4);
+    opacity: 0.5;
+    *background:#000;
+    filter: alpha(opacity:50);
+}
+
+js
+ 	//师资力量
+    var boxWidth = 1000;//可见区域的宽度
+    var teacherLi = 160;//li的宽度
+    var liMargin = 40;//li的左右外间距
+    var slideUl = $(".teacher-list");
+    var teacherUl = slideUl.find("li").length*(teacherLi+liMargin);
+    var pageCount = Math.ceil(teacherUl/boxWidth);//总页数
+    var page = 1;//当前页
+    //点击后退按钮
+    $(".left-btn").click(function(){
+        clearInterval(timer);
+        if(!slideUl.is(":animated")){
+            if(page == 1){//当前页是第一页,left减为最后一页时的left值
+                slideUl.animate({left:'-='+boxWidth*(pageCount-1)},"slow");
+                page = pageCount;
+            }else{
+                slideUl.animate({left:'+='+boxWidth},"slow");
+                page--;
+            }
+        }
+    });
+    //点击前进按钮
+    $(".right-btn").click(function(){
+        clearInterval(timer);
+        slideNext();
+    });
+    var timer = setInterval(function(){
+        slideNext();
+    },3000);
+    function slideNext(){
+        if(!slideUl.is(":animated")){
+            if(page == pageCount){//当前页是最后一页,left减为第一页时的left值
+                slideUl.animate({left:'0px'},"slow");
+                page = 1;
+            }else{
+                slideUl.animate({left:'-='+boxWidth},"slow");
+                page++;
+            }
+        }
+    }
+
+2.css属性书写顺序
+
+同一 rule set 下的属性在书写时，应按功能进行分组，并以 Formatting Model（布局方式、位置） > Box Model（尺寸） > Typographic（文本相关） > Visual（视觉效果） 的顺序书写，以提高代码的可读性。
+
+解释：
+
+Formatting Model 相关属性包括：position / top / right / bottom / left / float / display / overflow 等
+Box Model 相关属性包括：border / margin / padding / width / height 等
+Typographic 相关属性包括：font / line-height / text-align / word-wrap 等
+Visual 相关属性包括：background / color / transition / list-style 等
+另外，如果包含 content 属性，应放在最前面。
+
+.sidebar {
+    /* formatting model: positioning schemes / offsets / z-indexes / display / ...  */
+    position: absolute;
+    top: 50px;
+    left: 0;
+    overflow-x: hidden;
+
+    /* box model: sizes / margins / paddings / borders / ...  */
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #ddd;
+
+    /* typographic: font / aligns / text styles / ... */
+    font-size: 14px;
+    line-height: 20px;
+
+    /* visual: colors / shadows / gradients / ... */
+    background: #f5f5f5;
+    color: #333;
+    -webkit-transition: color 1s;
+       -moz-transition: color 1s;
+            transition: color 1s;
+}
+
+3.url()函数中的路径不加引号
+
+body {
+    background: url(bg.png);
+}
+
+4.字重
+
+CSS 的字重分 100 – 900 共九档，但目前受字体本身质量和浏览器的限制，实际上支持 400 和 700 两档,前者normal,后者bold
+5.行高
+line-height:1.5;
+
+6.属性前缀
+
+带私有前缀的属性由长到短排列，按冒号位置对齐
+.box {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+7. class 必须单词全字母小写，单词间以 - 分隔。
+
+8.对于无需自闭合的标签，不允许自闭合。
+
+<input type="text" name="title">
+
+9.有下载需求的图片采用 img 标签实现，无下载需求的图片采用 CSS 背景图实现
+
+ - 产品 logo、用户头像、用户产生的图片等有潜在下载需求的图片，以 img 形式实现，能方便用户下载。
+ - 无下载需求的图片，比如：icon、背景、代码使用的图片等，尽可能采用 css 背景图实现。
+
+ 10.input虚框，怎么去掉input虚框？
+
+    <div style="margin:0 auto; width:900px; height:1000px; border:1px solid #000000;">
+        <input type="button" value="点击我" hidefocus="hidefocus" />
+        <a href="www.baodu.com" hidefocus="hidefocus" ></a>
+    </div>
+    根据我的测试，首先要说明的是在chrom和oprea下不会出现这个问题，在IE8.0及firefox上才会出现这个问题.
+    我们分三种种情况来考虑
+    1、IE8.0以上的版本我们只要在css中设置：:focus{ outline:0 }即可。
+    2、在firefox下我们要设置：
+        :focus{ outline:0 }
+        input::-moz-focus-inner{ border-color:transparent!important; }  
+        后面这句话是指将input的边框设置成透明，!important意思指优先级高
+    3、在IE7.0及以下版本中我们要设置 hidefocus="hidefocus"
+
+ 11.position:fixed无效的问题
+ 
+ 在写把按钮固定在页面底部时,使用了position:fixed,但是发现不见了,一直在body的最底部,而不是在屏幕的底部,找的很久,才发现与引入的script.min.js冲突,注释掉,就可以正常,具体原因还有待查证.
+  
+  12.css操作滚动条：
+
+::-webkit-scrollbar-track {
+background-color: #b46868;
+} /* 滚动条的滑轨背景颜色 */
+
+::-webkit-scrollbar-thumb {
+background-color: rgba(0, 0, 0, 0.2); 
+} /* 滑块颜色 */
+
+::-webkit-scrollbar-button {
+background-color: #7c2929;
+} /* 滑轨两头的监听按钮颜色 */
+
+::-webkit-scrollbar-corner {
+background-color: black;
+} /* 横向滚动条和纵向滚动条相交处尖角的颜色 */
+
+隐藏滚动条，但是依然可以滚动
+::-webkit-scrollbar{width:0;}
+目前本方法只在webkit内核浏览器中有效(Chrome,Safari)。可以用JS做渐变的隐藏滚动条特效，依旧可以滚动。
+
+13.<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+X-UA-Compatible是IE8的一个专有<meta>属性,它告诉IE8采用何种IE版本去渲染网页
+IE=edge:告诉IE使用最新的引擎渲染网页具体看https://segmentfault.com/a/1190000002407912
+
+14.
+box-sizing:border-box;
+width:33.3333%;
+float:left;
+box-sizing:border-box是包括边框在内的
+  
+
+ 

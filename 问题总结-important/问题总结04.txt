@@ -1,0 +1,499 @@
+1.列表中有数字+文字<li><input><a></li>,
+
+a{
+	width:245px;
+    display:inline-block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+input的话在ie中和a处于同一行上,但是在chrome中会靠下,
+解决方法:input{
+	 vertical-align: 30%;//chrome中居中会靠下
+    *vertical-align:middle;//ie中默认为居中
+}
+
+
+2.让列表自动分配自适应间距
+
+.shortcut-list li{
+    float:left;
+    width:25%;
+    text-align: center;
+}
+
+3.Web移动端Fixed布局的解决方案
+
+http://www.w3cplus.com/mobile/mobile-fixed-layout.html
+移动端业务开发，iOS 下经常会有 fixed 元素和输入框(input 元素)同时存在的情况。
+既然在 iOS 下由于软键盘唤出后，页面 fixed 元素会失效，导致跟随页面一起滚动，那么假如——页面不会过长出现滚动，那么即便 fixed 元素失效，也无法跟随页面滚动，也就不会出现上面的问题了。
+<body class="layout-scroll-fixed">
+    <!-- fixed定位的头部 -->
+    <header>
+
+    </header>
+
+    <!-- 可以滚动的区域 -->
+    <main>
+        <div class="content">
+        <!-- 内容在这里... -->
+        </div>
+    </main>
+
+    <!-- fixed定位的底部 -->
+    <footer>
+        <input type="text" placeholder="Footer..."/>
+        <button class="submit">提交</button>
+    </footer>
+</body>
+
+header, footer, main {
+    display: block;
+}
+
+header {
+    position: fixed;
+    height: 50px;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+footer {
+    position: fixed;
+    height: 34px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+main {
+    /* main绝对定位，进行内部滚动 */
+    position: absolute;
+    top: 50px;
+    bottom: 34px;
+    /* 使之可以滚动 */
+    overflow-y: scroll;
+     /* 增加该属性，可以增加弹性 */
+    -webkit-overflow-scrolling: touch;
+}
+
+main .content {
+    height: 2000px;
+}
+
+4.vertical-align 属性会影响到 inline-block 元素，你可以会把它的值设置为 top 。
+
+5.ie下jquery的fadeIn和fadeOut方法失效的bug
+
+ - 1.绝对定位嵌套绝对定位
+ 解决方法:把绝对定位换成浮动
+
+ - 2.父级绝对定位嵌套大于父级尺寸的图片ie8失效
+
+ - Ie6,7,8在position:relative时fadeIn(),fadeOut()失效
+ 
+ 如果fadeIn的元素的子元素有position属性时 以relative值为最严重 有position属性的元素不会出现fadeIn的效果！
+ 解决方式:在fadeIn()之前动态的将其position属性改为relative; 会解决IE7下的这个bug
+
+ 6.控制网页用360浏览时默认用极速模式浏览
+ 
+ http://se.360.cn/v6/help/meta.html
+ 在head标签中添加一行代码：
+<html>
+  <head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  </head>
+  <body>
+  </body>
+</html>
+
+content的取值为webkit,ie-comp,ie-stand之一，区分大小写，分别代表用webkit内核，IE兼容内核，IE标准内核。 
+若页面需默认用极速核，增加标签：<meta name="renderer" content="webkit"> 
+若页面需默认用ie兼容内核，增加标签：<meta name="renderer" content="ie-comp"> 
+若页面需默认用ie标准内核，增加标签：<meta name="renderer" content="ie-stand">
+
+7.webstorm自带debugger服务器
+
+打开webstorm->settings->Build,Execution,Deployment->Debugger->把端口Port改成8089,按确定就可以了
+网页用webstorm打开如果还是以localhost开头的话,需要手动改成本机ip地址,然后在同一局域网内用手机或电脑访问该网址,就可以啦.
+
+8.box-shadow的使用方法
+
+每次使用box-shadow,都要查阅资料才能实现对应的效果,现在总结一下,方便以后查看.
+
+##语法:
+
+  E {box-shadow: inset x-offset y-offset blur-radius spread-radius color};
+  E {box-shadow: 投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色};
+
+##取值:
+
+ - 阴影类型：此参数可选，默认的投影方式是外阴影；如果取其唯一值“inset”,就是将外阴影变成内阴影；
+
+ - X-offset:是指阴影水平偏移量,其值可正可负，正值，则阴影在对象的右边，负值，阴影在对象的左边；
+
+ - Y-offset:是指阴影的垂直偏移量，其值也可以是正负值，正值，阴影在对象的底部，负值时，阴影在对象的顶部；
+
+ - 阴影模糊半径：此参数是可选，只能为正值，如果其值为0时，表示阴影不具有模糊效果，值越大阴影的边缘就越模糊；
+
+ - 阴影扩展半径：此参数可选，其值可为正负值，正值，则整个阴影都延展扩大，反之，则缩小
+
+ - 阴影颜色：此参数可选，不设定任何颜色时，浏览器会取默认色，但各浏览器默认色不一样，特别是在webkit内核下的safari和chrome浏览器将无色，也就是透明，建议不要省略此参数。
+
+##兼容浏览器的写法:
+
+//Firefox4.0-
+-moz-box-shadow: 投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色;
+//Safari and Google chrome10.0-
+-webkit-box-shadow: 投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色;
+//Firefox4.0+ 、 Google chrome 10.0+ 、 Oprea10.5+ and IE9
+box-shadow:  投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色;
+
+box-shadow和text-shadow一样可以使用一个或多个投影，如果使用多个投影时必须需要用逗号“，”分开。
+
+##IE滤镜模拟box-shadow阴影效果
+
+基本语法：filter:progid:DXImageTransform.Microsoft.Shadow(color=’颜色值’, Direction=阴影角度（数值）,Strength=阴影半径（数值）);
+
+ -ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=4,
+Direction=135, Color='#000000')";
+ 
+filter:
+progid:DXImageTransform.Microsoft.Shadow(Strength=4,
+Direction=135,
+Color='#000000');
+
+注意：该滤镜必须配合background属性一起使用，否则该滤镜失效。
+
+注意:
+  1.滤镜里的颜色属性必须写完整，不能用缩写
+  2.滤镜的阴影是计算在宽高内的
+  3.在盒阴影下，box会自动加上overflow:hidden。
+
+
+9.css制作上下左右的空心箭头
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css制作空心的上下左右的箭头</title>
+    <style type="text/css">
+        *{
+            padding:0;
+            margin:0;
+        }
+        .box{
+            width:100px;
+            height:350px;
+            margin:30px auto;
+            border:1px solid red;
+            background:white;
+        }
+        .arrow-box{
+            width:30px;
+            height:30px;
+            margin:20px auto;
+            position:relative;
+        }
+        /*右箭头*/
+        .right{
+            width:20px;
+            height:20px;
+            position:absolute;
+            left:0;
+            top:0;
+            /*border:1px solid blue;*/
+        }
+        .right-arrow1,.right-arrow2{
+            width:0;
+            height:0;
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            border-top:10px transparent dashed;
+            border-right:10px transparent dashed;
+            border-bottom:10px transparent dashed;
+            border-left:10px white solid;
+            overflow:hidden;
+
+        }
+        .right-arrow1{
+            left:1px;/*重要*/
+            border-left:10px blue solid;
+        }
+        .right-arrow2{
+            border-left:10px white solid;
+        }
+        /*左箭头*/
+        .left{
+            width:20px;
+            height:20px;
+            position:absolute;
+            left:-10px;
+            top:0;
+            z-index: 2;/*兼容ie8-*/
+            /*border:1px solid blue;*/
+        }
+        .left-arrow1,.left-arrow2{
+            width:0;
+            height:0;
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            z-index:5;/*兼容ie8-*/
+            border-top:10px transparent dashed;
+            border-left:10px transparent dashed;
+            border-bottom:10px transparent dashed;
+            border-right:10px white solid;
+            overflow:hidden;
+        }
+        .left-arrow1{
+            border-right:10px blue solid;
+        }
+        .left-arrow2{
+            left:1px;/*重要*/
+            border-right:10px white solid;
+        }
+        /*上箭头*/
+        .top{
+            width:20px;
+            height:20px;
+            position:absolute;
+            left:0;
+            top:0;
+            z-index: 2;/*兼容ie8-*/
+            /*border:1px solid blue;*/
+        }
+        .top-arrow1,.top-arrow2{
+            width:0;
+            height:0;
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            z-index: 5;/*兼容ie8-*/
+            border-top:10px transparent dashed;
+            border-left:10px transparent dashed;
+            border-right:10px transparent dashed;
+            border-bottom:10px white solid;
+            overflow:hidden;
+        }
+        .top-arrow1{
+            border-bottom:10px blue solid;
+        }
+        .top-arrow2{
+            top:1px;/*重要*/
+            border-bottom:10px white solid;
+        }
+        /*下箭头*/
+        .bottom{
+            width:20px;
+            height:20px;
+            position:absolute;
+            left:0;
+            top:0;
+            z-index: 2;/*兼容ie8-*/
+            /*border:1px solid blue;*/
+        }
+        .bottom-arrow1,.bottom-arrow2{
+            width:0;
+            height:0;
+            display:block;
+            position:absolute;
+            left:0;
+            top:0;
+            z-index: 5;/*兼容ie8-*/
+            border-bottom:10px transparent dashed;
+            border-left:10px transparent dashed;
+            border-right:10px transparent dashed;
+            border-top:10px white solid;
+            overflow:hidden;
+        }
+        .bottom-arrow1{
+            top:1px;/*重要*/
+            border-top:10px blue solid;
+        }
+        .bottom-arrow2{
+            border-top:10px white solid;
+        }
+    </style>
+
+<body>
+<div class="box">
+    <p> 右箭头</p>
+    <div class="arrow-right arrow-box">
+        <b class="right"><i class="right-arrow1"></i><i class="right-arrow2"></i></b>
+    </div>
+    <p> 左箭头</p>
+    <div class="arrow-left arrow-box" >
+        <b class="left"><i class="left-arrow1"></i><i class="left-arrow2"></i></b>
+    </div>
+    <p> 上箭头</p>
+    <div class="arrow-top arrow-box" >
+        <b class="top"><i class="top-arrow1"></i><i class="top-arrow2"></i></b>
+    </div>
+    <p> 下箭头</p>
+    <div class="arrow-bottom arrow-box" >
+        <b class="bottom"><i class="bottom-arrow1"></i><i class="bottom-arrow2"></i></b>
+    </div>
+</div>
+</body>
+</html>
+
+10.有时候单选按钮和他后面的文字竖直方向并不是对齐的,单选按钮会比文字高,而且有时还需要设置它和后面文字的间距以及按钮之间的间距
+解决方法:在它们外面包一个span
+    .box{
+          
+            overflow: hidden;
+            zoom:1;
+            color:#030303;
+        }
+        .box label{
+            float:left;
+            width:310px;
+            height:37px;
+            margin-right: 30px;
+            line-height: 37px;
+            font-size: 18px;
+            text-align: right;
+        }
+        .gender-info span{
+            display: inline-block;
+            padding-top: 10px;
+            margin-right: 45px;
+            line-height: 16px;
+        }
+        .gender-info input{
+            margin-right: 13px;
+        }
+
+    <div class="gender-info box">
+         <label>性别：</label>
+         <span><input type="radio" checked="checked" name="gender" value="male" hidefocus="hidefocus">男</span>
+         <span><input type="radio" name="gender" value="female" hidefocus="hidefocus">女</span>
+    </div>
+
+
+ 5.17   --- 火车票 7.15
+
+ 最多5张 最少3张再议
+ es6 -> react -> vue
+
+ 11.模拟select
+
+    <div class="link-box">
+       <div class="cur-link">西华大学更多链接</div>
+       <ul class="link-list">
+           <li><a href="javascript:void(0)">西华大学更多链接1</a></li>
+           <li><a href="javascript:void(0)">西华大学更多链接2</a></li>
+           <li><a href="javascript:void(0)">西华大学更多链接3</a></li>
+       </ul>
+       <span class="arrow-btn"></span>
+   </div>
+
+   .link-box{
+            position: relative;
+            width:365px;
+            height:37px;
+            margin: 50px auto 0;
+            border:1px solid #cccccc;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+        .cur-link{
+            float:left;
+            width:318px;
+            height:37px;
+            line-height: 37px;
+            color:#cccccc;
+            text-align: center;
+            border: 1px solid red;
+        }
+        .link-list{
+            position: absolute;
+            left:0;
+            top:37px;
+            width:318px;
+            overflow: hidden;
+        }
+        .link-list li{
+            height:37px;
+            line-height: 37px;
+            padding-left: 100px;
+        }
+        .link-list li a{
+            text-decoration: none;
+            color:#cccccc;
+        }
+        .arrow-btn{
+            cursor: pointer;
+            float:left;
+            display: block;
+            width:40px;
+            height:37px;
+            border-left:1px solid #cccccc;
+            background: url(./img/arrow-btn.png) no-repeat center center;
+        }
+
+ var listLength = $(".link-list li").length * 37;
+
+    $(".link-list").hide().css('height',listLength+'px');
+    $(".arrow-btn").click(function(e){
+        $(".link-list").slideToggle(500);
+        $(document).one("click", function(){
+            $(".link-list").hide();
+        });
+        e.stopPropagation();
+    });
+    $(".link-list li").click(function(e){
+        var curText = $(this).find('a').text();
+        $(".cur-link").html(curText);
+        $(".link-list").hide();
+        e.stopPropagation();
+    });
+
+    注意:需要禁止a的点击自动跳转
+
+12.实现滚动条滚动到指定位置时,显示某个元素
+    <div class="test">
+       <div class="target">
+           test test test 
+       </div>
+    </div>
+
+       *{
+            margin:0;
+            padding:0;
+        }
+        .test{
+            margin:900px auto 500px;
+            width:800px;
+            height:600px;
+            position: relative;
+            background-color: #00ac61;
+        }
+        .target{
+            position: absolute;
+            left:200px;
+            width:400px;
+            height:300px;
+            opacity: 0;
+            background-color: palevioletred;
+        }
+
+        $(function(){
+           var targetHeight = $(".test").offset().top;
+
+           $(window).scroll(function(){
+               var scrollTop = $(this).scrollTop();
+               if(scrollTop>targetHeight-200){
+                   $(".target").animate({left:'150px',opacity:1},500);
+               }
+           });
+        });
